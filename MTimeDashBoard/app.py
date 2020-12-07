@@ -73,35 +73,43 @@ app.layout = html.Div(
     children  = [
         html.Div(
             children = [
-                "dataset: ",
+                html.H6(
+                    children = ["Dataset:  "],
+                    style={"width": "5%","display": "inline-block"}
+                ),
                 dcc.Dropdown(
                     id="data_name_input",
                     options=[{"label": i, "value": i} for i in DATASET_NAMES],
                     value=DATASET_NAMES[0],
-                    style={"width": "50%", "display": "inline-block"}
+                    style={
+                        "width": "150px",
+                        "display": "inline-block",
+                        "margin":"0",
+                        "vertical-align": "middle"
+                    }
                 ),
             ],
-            style={"width": "30%", "display": "inline-block"},
+            style={"width": "100%"},
         ),
         html.Div(
             children = [
-                "show_figures: ",
+                html.P(
+                    children = ["show_figures: "],
+                    style={"display": "inline-block"}
+                ),
                 dcc.Input(
                     id="show_figures", value=min(20, 5), type="text",
-                    style={"width": "20%", "display": "inline-block"}
+                    style={"width": "3%"}
                 ),
-            ],
-            style={"width": "15%", "display": "inline-block"},
-        ),
-        html.Div(
-            children = [
-                "show_columns: ",
+                html.P(
+                    children = ["show_columns: "],
+                    style={"display": "inline-block"}
+                ),
                 dcc.Input(
                     id="show_columns", value=2, type="text",
-                    style={"width": "20%", "display": "inline-block"}
+                    style={"width": "3%"}
                 ),
             ],
-            style={"width": "15%", "display": "inline-block"},
         ),
         dcc.Graph(id="indicator-graphic"),
     ],
@@ -126,7 +134,6 @@ def update_fig(data_name_input, show_figures, show_columns):
         DATAFRAME["stock_id"] = DATAFRAME["stock_id"].astype(str)
         DATAFRAME["date"] = pd.to_datetime(DATAFRAME["date"])
         DATAFRAME["close"] = DATAFRAME["close"].astype(float)
-        print(DATAFRAME.info())
         available_ids = DATAFRAME["stock_id"].astype(str).unique()
         NBR_KEY = len(available_ids)
 
